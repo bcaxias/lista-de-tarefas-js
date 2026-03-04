@@ -3,60 +3,73 @@ const button = document.querySelector("#addButton");
 const lista = document.querySelector("#taskLista");
 const themeToggle = document.querySelector("#themeToggle");
 
-// Salvar as informaações no LocalStorage
+// Salvar tarefas no LocalStorage (agora salva texto + status)
 function salvarTarefas() {
-  const tarefa = [];
-  const itens = lista.querySelectorAll("li span");
+  const tarefas = [];
+
+  const itens = lista.querySelectorAll("li");
 
   itens.forEach(function(item){
-    tarefa.push(item.textContent);
+    const texto = item.querySelector(".task-text").textContent;
+    const concluida = item.classList.contains("concluida-item");
+
+    tarefas.push({
+      texto: texto,
+      concluida: concluida
+    });
   });
 
-  localStorage.setItem("tarefas", JSON.stringify(tarefa)); //Convertendo array em string
+  localStorage.setItem("tarefas", JSON.stringify(tarefas));
 }
 
-// Cria as Tarefas
-function criarTarefa(texto) {
-  const novatarefa = document.createElement("li"); // Criando elemento liSSS
+// Criar tarefa
+function criarTarefa(texto, concluida = false) {
 
-  // Criando elemento span
-  const span = document.createElement("span");
-  span.textContent = texto;
+  const novatarefa = document.createElement("li");
 
-  //Cria ícone check
+  const container = document.createElement("div");
+  container.classList.add("task-container");
+
   const checkIcon = document.createElement("span");
   checkIcon.textContent = "✔";
   checkIcon.classList.add("check-icon");
-  novatarefa.appendChild(checkIcon);
 
-  // Evento de Concluir a Tarefa
-  span.addEventListener("click", function() {
-    span.classList.toggle("concluida");
+  const span = document.createElement("span");
+  span.classList.add("task-text");
+  span.textContent = texto;
+
+  if(concluida) {
+    novatarefa.classList.add("concluida-item");
+    span.classList.add("concluida");
+  }
+
+  container.addEventListener("click", function() {
     novatarefa.classList.toggle("concluida-item");
+    span.classList.toggle("concluida");
     salvarTarefas();
   });
 
-  //Crio botão delete
   const botaoDelete = document.createElement("button");
   botaoDelete.textContent = "Delete";
 
-   //Criar evendo do DELETE
   botaoDelete.addEventListener("click", function() {
     novatarefa.remove();
     salvarTarefas();
   });
 
-  novatarefa.appendChild(span);
-  novatarefa.appendChild(botaoDelete);
-  lista.appendChild(novatarefa);
+  container.appendChild(checkIcon);
+  container.appendChild(span);
 
-  salvarTarefas();
+  novatarefa.appendChild(container);
+  novatarefa.appendChild(botaoDelete);
+
+  lista.appendChild(novatarefa);
 }
 
-// Adiciona as tarefas
+// Adicionar tarefa
 button.addEventListener("click", function() {
-    
-  const valor = input.value.trim(); //pega e limpa espaços
+
+  const valor = input.value.trim();
 
   if(valor === "") {
     alert("Preencha o campo corretamente!");
@@ -64,20 +77,38 @@ button.addEventListener("click", function() {
   }
 
   criarTarefa(valor);
-  //Limpar input
+  salvarTarefas();
   input.value = "";
 });
 
-// Carregar tarefa quando ela abrir a página
-window.addEventListener("load", function() {
-
-    const tarefasSalvas = JSON.parse(this.localStorage.getItem("tarefas")) || [];
-
-    tarefasSalvas.forEach(function(tarefa) {
-      criarTarefa(tarefa);
-  });
+// Enter para adicionar
+input.addEventListener("keypress", function(e) {
+  if(e.key === "Enter") {
+    button.click();
+  }
 });
 
+// Carregar página (tarefas + tema)
+window.addEventListener("load", function() {
+
+  // Carregar tarefas
+  const tarefasSalvas = JSON.parse(localStorage.getItem("tarefas")) || [];
+
+  tarefasSalvas.forEach(function(tarefa) {
+    criarTarefa(tarefa.texto, tarefa.concluida);
+  });
+
+  // Carregar tema
+  const temaSalvo = localStorage.getItem("tema");
+
+  if (temaSalvo === "light") {
+    document.body.classList.add("light");
+    themeToggle.textContent = "☀";
+  } else {
+    themeToggle.textContent = "🌙";
+  }
+
+});
 
 // Alternar tema
 themeToggle.addEventListener("click", function() {
@@ -92,23 +123,4 @@ themeToggle.addEventListener("click", function() {
     themeToggle.textContent = "🌙";
   }
 
-});
-
-// Carregar tema salvo
-window.addEventListener("load", function() {
-
-  const temaSalvo = localStorage.getItem("tema");
-
-  if (temaSalvo === "light") {
-    document.body.classList.add("light");
-    themeToggle.textContent = "☀";
-  }
-
-});
-
-//Adicionar tarefa com ENTER
-input.addEventListener("keypress", function(e) {
-  if(e.key === "Enter") {
-    button.click();
-  }
 });
