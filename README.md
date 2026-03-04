@@ -1,19 +1,20 @@
-# 📝 Lista de Tarefas
+# # 📝 Lista de Tarefas
 
-Projeto simples de uma aplicação de lista de tarefas desenvolvida com HTML, CSS e JavaScript puro.
+Aplicação de Lista de Tarefas desenvolvida com HTML, CSS e JavaScript puro, com foco na prática de manipulação de DOM e persistência de dados no navegador.
+
+---
 
 ## 🚀 Sobre o Projeto
 
-Este projeto foi criado com o objetivo de praticar:
+Este projeto foi desenvolvido com o objetivo de consolidar fundamentos do desenvolvimento web, praticando:
 
 - Manipulação de DOM
-- Eventos de clique
 - Criação dinâmica de elementos
-- Validação de formulário
+- Eventos de clique
 - Organização de código
-- Feedback visual para o usuário
+- Persistência de dados com LocalStorage
 
-A aplicação permite adicionar tarefas, marcá-las como concluídas com um ícone de check e removê-las da lista.
+A aplicação permite ao usuário adicionar, concluir e remover tarefas, mantendo os dados salvos mesmo após atualizar ou fechar a página.
 
 ---
 
@@ -24,7 +25,9 @@ A aplicação permite adicionar tarefas, marcá-las como concluídas com um íco
 ✔ Marcar tarefa como concluída  
 ✔ Ícone visual de confirmação  
 ✔ Alteração visual ao concluir tarefa  
-✔ Deletar tarefas  
+✔ Remoção de tarefas  
+✔ Persistência de dados utilizando a API LocalStorage  
+✔ Salvamento automático das tarefas no navegador  
 
 ---
 
@@ -32,20 +35,32 @@ A aplicação permite adicionar tarefas, marcá-las como concluídas com um íco
 
 - HTML5  
 - CSS3  
-- JavaScript (Vanilla JS)
+- JavaScript (Vanilla JS)  
+- API LocalStorage  
+
+---
+
+## 🧠 Conceitos Aplicados
+
+- `querySelector` e manipulação de elementos
+- `addEventListener`
+- `classList.toggle`
+- `JSON.stringify()` e `JSON.parse()`
+- Armazenamento e recuperação de dados do navegador
 
 ---
 
 ## 📸 Preview
 
-![Preview](./preview.jpeg)
+![Preview do Projeto](preview.jpeg)
 
 ---
 
 ## 🎯 Objetivo
 
-Projeto desenvolvido como parte da minha evolução nos estudos de desenvolvimento web, focando na prática e na consolidação dos fundamentos de JavaScript.
+Projeto criado como parte da minha evolução no desenvolvimento web, focando na prática e consolidação dos fundamentos do JavaScript antes de avançar para tecnologias de backend.
 
 ---
 
+👨‍💻 Desenvolvido por Bruno Kauã
 👨‍💻 Desenvolvido por Bruno Kauã
